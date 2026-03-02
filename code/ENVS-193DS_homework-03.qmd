@@ -1,0 +1,25 @@
+---
+title: "ENVS-193DS_homework-03"
+author: "Isaac Miller"
+date: "2026-03-05"
+format: 
+  html:
+    toc: true # use this to display a table of contents
+---
+
+# Set Up
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
