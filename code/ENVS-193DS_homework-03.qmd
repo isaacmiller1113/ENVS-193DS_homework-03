@@ -9,11 +9,37 @@ format:
 
 # Set Up
 
-[Link to my GitHub Repository](https://isaacmiller1113.github.io/ENVS-193DS_homework-03/)
+[Link to my GitHub Repository](https://isaacmiller1113.github.io/ENVS-193DS_homework-03/code/ENVS-193DS_homework-03.html)
+
+```{r}
+#| label: set up chunk 
+#| message: false
+
+# Load in packages
+library(tidyverse)     # general use
+library(here)          # managing file paths relative to project root
+library(janitor)       # cleaning data frames
+library(readxl)        # importing data from excel files (.xls or .xlsx)
+library(ggeffects)     # generating model predictions
+library(gtsummary)     # generating summary tables for models
+library(MuMIn)         # model selection and model inference
+library(broom.helpers) # tidying and labeling model outputs
+
+# Read in data objects
+salinity <- read_csv(here("data", "salinity-pickleweed.csv")) |> 
+  clean_names() # Store salinity data
+  
 
 
+```
 
+# Problem 1. Slough soil salinity
 
+You are working at a restoration site where you are managing planting of California pickleweed (Salicornia virginica) along a brackish slough (i.e. there is a mixture of fresh water and salt water).
+
+You decide to measure plant growth for individual pickleweed plants by plucking an individual out of the ground and measuring the biomass (in g). You also measure soil salinity (as electrical conductivity in units of millisiemens per centimeter, or mS/cm) at the location in which the individual was growing. Admittedly, this isn’t a perfect study, but it’s what you can do with the time and resources you have!
+
+## a. An appropriate test
 
 
 
