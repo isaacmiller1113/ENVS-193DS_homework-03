@@ -41,6 +41,13 @@ You decide to measure plant growth for individual pickleweed plants by plucking 
 
 ## a. An appropriate test
 
+The two appropriate tests are a Pearson's r correlation and linear regression. Pearson’s correlation ($r$) quantifies the strength and direction of the linear relationship between soil salinity and biomass as a single value between -1 and 1. In contrast, a linear regression models biomass as a functional response to the salinity predictor, allowing us to estimate the specific rate of change and predict biomass values.
+
+The two appropriate tests are Pearson’s correlation and simple linear regression. Pearson’s correlation ($r$) is used to determine the strength and direction of the linear relationship between the two continuous variables: soil salinity (mS/cm) and California pickleweed biomass (g). While correlation provides a single unitless measure of how closely the points cluster around a line, simple linear regression models the response variable (biomass) as a function of the predictor variable (salinity), allowing us to quantify the specific effect size—how many grams of biomass are lost or gained for every 1 mS/cm increase in salinity.
+
+: describes a linear relationship between a response variable and a predictor variable(s). beffore model: linear relationship and independent errors, after model: homoscedasticity (constant variance) and normally distributed error
+
+
 
 
 
