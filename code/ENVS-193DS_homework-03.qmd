@@ -27,25 +27,135 @@ library(broom.helpers) # tidying and labeling model outputs
 
 # Read in data objects
 salinity <- read_csv(here("data", "salinity-pickleweed.csv")) |> 
-  clean_names() # Store salinity data
+  clean_names() |>  # Store salinity data
+  rename(salinity_mscm = salinity_m_s_cm)
   
 
 
 ```
 
+# Read in my personal data
+my_data <- read_csv(here("data", ""))
+
 # Problem 1. Slough soil salinity
 
 You are working at a restoration site where you are managing planting of California pickleweed (Salicornia virginica) along a brackish slough (i.e. there is a mixture of fresh water and salt water).
 
-You decide to measure plant growth for individual pickleweed plants by plucking an individual out of the ground and measuring the biomass (in g). You also measure soil salinity (as electrical conductivity in units of millisiemens per centimeter, or mS/cm) at the location in which the individual was growing. Admittedly, this isn’t a perfect study, but it’s what you can do with the time and resources you have!
+You decide to measure plant growth for individual pickleweed plants by plucking an individual out of the ground and measuring the biomass (in g). You also measure soil salinity (as electrical conductivity in units of millisiemens per centimeter, or (mS/cm) at the location in which the individual was growing. Admittedly, this isn’t a perfect study, but it’s what you can do with the time and resources you have!
 
 ## a. An appropriate test
 
-The two appropriate tests are a Pearson's r correlation and linear regression. Pearson’s correlation ($r$) quantifies the strength and direction of the linear relationship between soil salinity and biomass as a single value between -1 and 1. In contrast, a linear regression models biomass as a functional response to the salinity predictor, allowing us to estimate the specific rate of change and predict biomass values.
+The two appropriate tests are a Pearson's r correlation and linear regression. Pearson’s correlation ($r$) is used to determine the strength and direction of the linear relationship between soil salinity (mS/cm) and California pickleweed biomass (g) as a single value between -1 and 1. In contrast, a linear regression visually models biomass as a response to the salinity predictor, allowing us to estimate the specific rate of change and predict biomass values. The difference is that correlation tells us how tightly the points clump together on a line, while regression gives us the math equation to predict biomass based on salinity. 
 
-The two appropriate tests are Pearson’s correlation and simple linear regression. Pearson’s correlation ($r$) is used to determine the strength and direction of the linear relationship between the two continuous variables: soil salinity (mS/cm) and California pickleweed biomass (g). While correlation provides a single unitless measure of how closely the points cluster around a line, simple linear regression models the response variable (biomass) as a function of the predictor variable (salinity), allowing us to quantify the specific effect size—how many grams of biomass are lost or gained for every 1 mS/cm increase in salinity.
+## b. Create a visualization
 
-: describes a linear relationship between a response variable and a predictor variable(s). beffore model: linear relationship and independent errors, after model: homoscedasticity (constant variance) and normally distributed error
+Create a visualization that would be appropriate for showing the relationship between soil salinity (in mS/cm) and California pickleweed biomass (in g).
+
+In addition to using the correct geometries, be sure to:
+
+relabel the x- and y-axes and include units
+use different colors from the ggplot() defaults
+use a different theme from the ggplot() default
+
+```{r}
+#| label: data visulaization
+
+ggplot(data = salinity,
+       aes(x = salinity_mscm,
+           y = pickleweed)) +
+  geom_point(color = "darkgreen",
+            alpha = 0.6) + 
+  geom_smooth(method = "lm", 
+              color = "black", 
+              se = TRUE) +
+  labs(x = "Soil salinity (mS/cm)",
+       y = "Pickleweed biomass (g)",
+       title = "Relationship between Salinity and Pickleweed Biomass") + 
+  theme_bw()
+
+
+```
+
+## c. Check your assumptions and run your test
+
+In the order that is appropriate, create separate sections using subheaders to:
+
+check your assumptions
+run your test
+In the section in which you check your assumptions, include any code and outputs you think are relevant. (Note: you may have already written code and shown its outputs to check your assumptions in part 1b, depending on the test you decide to go with!). Additionally, write 1-3 sentences describing:
+
+which assumptions you checked
+how you checked your assumptions
+your assessment of your assumption checks
+In the section in which you run your test, be sure your code is annotated and the outputs are visible.
+
+COMMIT
+
+## d. Results communication
+
+In 1-3 sentences each, write about:
+
+which test you used, and why (i.e. “To evaluate the strength of the relationship between pickleweed biomass and soil salinity, I used a…”)
+your interpretation of your test (along with the appropriate summary of the test in parentheses)
+
+
+
+COMMIT
+
+
+## e. Test implications
+
+You’re working on a team of people at this restoration site who are also concerned about pickleweed planting. In 2-3 sentences, write what you would communicate to them about the results of this test and what it means for pickleweed planting success at your site.
+
+Be cognizant of your audience as you are writing: what would they need to know to take action?
+
+
+COMMIT
+
+## f. Double check your own work.
+
+
+
+
+
+
+# Problem 2. Personal data
+
+## a. Updating your visualizations
+
+
+## b. Captions
+
+# Problem 3. Affective visualization
+
+## a. Describe in words what an affective visualization could look like for your personal data (3-5 sentences).
+
+
+## b. Create a sketch (on paper) of your idea.
+
+
+## c. Make a draft of your visualization.
+
+
+## d. Write an artist statement.
+
+
+## e. Prep your materials to share in class
+
+
+# Problem 4. Statistical critique
+
+
+## a. Revisit and summarize
+
+
+## b. Visual clarity
+
+
+## c. Aesthetic clarity
+
+
+## d. Recommendations
 
 
 
