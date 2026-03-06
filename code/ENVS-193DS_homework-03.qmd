@@ -61,11 +61,10 @@ what you can do with the time and resources you have!
 To determine the strength of the relationship between soil salinity
 (mScm) and California pickleweed biomass (g), the two appropriate tests
 are Pearson’s ($r$) correlation and Spearman’s ($\rho$) rank
-correlation. Pearson's correlation is a parametric test that measure the
+correlation. Pearson's correlation is a parametric test that measures the
 strength and direction of the relationship between variables (biomass
-and salinity). Spearmans rank correlation is a non-parametric version
-that does not depend on the assumption that the data is normally
-distributed or continuous, and measures the monotonic relationship; the
+and salinity). Spearmans rank correlation is a non-parametric version, and unlike spearman's, does not depend on the assumption that the data is normally
+distributed or continuous. The test measures the monotonic relationship where the
 data is ranked from smallest to largest and correlation is calculated
 based on the ranked numbers rather than the actual measurements.
 
@@ -116,7 +115,7 @@ plot(salinity_model) # plotting residuals of model object
 ```
 
 The data shows that the residualas have a constant variance
-(homoscedastic) accross the range of fitted valies according to the
+(homoscedastic) accross the range of fitted values according to the
 Residuals vs Fitted and Scale-Location plots as they are evenly and
 randomly distributed. The residuals (errors) seem to be normally
 distributed according to the QQ Residuals plot as the data more or less
@@ -207,6 +206,47 @@ COMMIT
 
 ## a. Updating your visualizations
 
+
+```{r}
+ggplot(my_data, # start with my data frame
+       aes(x = `On Campus Class`, # x-axis is school day (yes/no) -> categorical predictor
+           y = `Total Physical Activity (min)`, fill = `On Campus Class`)) + # y-axis is total physical activity -> response variable
+  geom_boxplot(alpha = 0.6) + # make a boxplot, 
+  geom_jitter(width = 0.2, # make a jitter
+              size = 3, 
+              alpha = 0.8, 
+              shape = 21, 
+              color = "black") +  
+  labs( # change the text for x and y axis and the title
+    x = "School Day", 
+    y = "Total Physical Activity (minutes)",
+    title = "Physical Activity Duration on School vs. Non-School Days"
+  ) +
+  scale_fill_manual(values = c("yes" = "#2E86AB", "no" = "#A23B72")) +  # Customize the colors
+  theme_light() +  # Different theme from default
+  theme(legend.position = "none")  # Remove legend since x-axis already shows the categories
+```
+
+```{r}
+ggplot(my_data, # start with my data
+       aes(x = `Time Spent on Work (min)`, 
+           y = `Total Physical Activity (min)`)) +
+  geom_point(size = 4, 
+             color = "red", 
+             alpha = 0.7) +  # Custom red color for points
+  labs( # change the text for x and y axis and the title
+    x = "Total School Time (minutes)",
+    y = "Total Physical Activity (minutes)",
+    title = "School Work Time vs. Physical Activity Time"
+  ) +
+  theme_bw() +  # black and white theme
+  theme(
+    plot.title = element_text(hjust = 0.5, # Center title
+                              face = "bold"),  # Bold title
+  )
+```
+
+
 ## b. Captions
 
 # Problem 3. Affective visualization
@@ -235,12 +275,26 @@ See slides from the data visualization lecture for more ideas.
 
 ## e. Prep your materials to share in class
 
+
 # Problem 4. Statistical critique
 
 ## a. Revisit and summarize
 
+To address whether corals were affected by temperature anomalies, the authors used linear regression to examine the relationship between bleached coral colonies and HotSpot values from buoys and satellite data at the reef locations. In this analysis, the response variable was the average percentage of bleached coral, while the predictor variable was the warmer water temperatures (Hot Spot values). This test directly addresses the research question by determining if temperature anomalies are a statistically significant predictor of coral stress. A ‘significant’ result would show that temperature anomalies recorded by the buoys are a reliable
+predictor of coral bleaching, meaning that higher Hot Spot values lead to higher percentages of
+bleached corals. This would confirm that corals in the region are affected by temperature
+anomalies and that buoy measurements can effectively track coral stress.
+
+[![Coral Bleaching Figure](coral_bleach_fig.png)]
+
 ## b. Visual clarity
+
+The authors very clearly visually represented their statistics by overlaying linear regression models (Y = a + bX) directly onto the underlying scatter plot data for all 4 figures (each representing a different location or buoy). The x-axis correctly places the Maximum Hot spot (the predictor) while the y-axis shows the Bleached corals percentage (the response), creating a logical flow for interpreting the effect of heat stress on corals. The authors also included the equations of the regression lines, r^2^ values, and significance asterisks within the plot area which allows the reader to immediately understand the the model as well as its strength and reliability without searching through the text. By showing the raw data points alongside the trend line, the authors are transparent about the sample size and the variance of the coral response.
 
 ## c. Aesthetic clarity
 
+The figure is has a very clean and minimalist design with a high data:ink ratio that avoids unnecessary grid lines and other visual clutter. The layout is calculated and sharp as the statistical annotations (r^2^, p-values, and regression equations) are placed in the empty white space above each panel, ensuring the text does not overlap with the data points. While the multi-panel layout is dense, the consistent use of simple black-and-white aesthetics and clear, evenly spaced axis labeling ensures that the primary focus remains on the trends in coral bleaching rather than being a distracting decoration.
+
 ## d. Recommendations
+
+
