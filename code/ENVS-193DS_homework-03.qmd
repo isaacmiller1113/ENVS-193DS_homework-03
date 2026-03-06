@@ -5,11 +5,15 @@ date: "2026-03-05"
 format: 
   html:
     toc: true # use this to display a table of contents
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
 # Set Up
 
-[Link to my GitHub Repository](https://isaacmiller1113.github.io/ENVS-193DS_homework-03/code/ENVS-193DS_homework-03.html)
+[Link to my GitHub
+Repository](https://isaacmiller1113.github.io/ENVS-193DS_homework-03/code/ENVS-193DS_homework-03.html)
 
 ```{r}
 #| label: set up chunk 
@@ -29,33 +33,47 @@ library(broom.helpers) # tidying and labeling model outputs
 salinity <- read_csv(here("data", "salinity-pickleweed.csv")) |> 
   clean_names() |>  # Store salinity data
   rename(salinity_mscm = salinity_m_s_cm)
-  
 
+# insert code to read in my data and label it as an object called "my_data"
+my_data <- read_csv(here("data", "my_data_hw3.csv"))
 
 ```
 
 # Read in my personal data
-my_data <- read_csv(here("data", ""))
+
+
 
 # Problem 1. Slough soil salinity
 
-You are working at a restoration site where you are managing planting of California pickleweed (Salicornia virginica) along a brackish slough (i.e. there is a mixture of fresh water and salt water).
+You are working at a restoration site where you are managing planting of
+California pickleweed (Salicornia virginica) along a brackish slough
+(i.e. there is a mixture of fresh water and salt water).
 
-You decide to measure plant growth for individual pickleweed plants by plucking an individual out of the ground and measuring the biomass (in g). You also measure soil salinity (as electrical conductivity in units of millisiemens per centimeter, or (mS/cm) at the location in which the individual was growing. Admittedly, this isn’t a perfect study, but it’s what you can do with the time and resources you have!
+You decide to measure plant growth for individual pickleweed plants by
+plucking an individual out of the ground and measuring the biomass (in
+g). You also measure soil salinity (as electrical conductivity in units
+of millisiemens per centimeter, or (mS/cm) at the location in which the
+individual was growing. Admittedly, this isn’t a perfect study, but it’s
+what you can do with the time and resources you have!
 
 ## a. An appropriate test
 
-The two appropriate tests are a Pearson's r correlation and linear regression. Pearson’s correlation ($r$) is used to determine the strength and direction of the linear relationship between soil salinity (mS/cm) and California pickleweed biomass (g) as a single value between -1 and 1. In contrast, a linear regression visually models biomass as a response to the salinity predictor, allowing us to estimate the specific rate of change and predict biomass values. The difference is that correlation tells us how tightly the points clump together on a line, while regression gives us the math equation to predict biomass based on salinity. 
+To determine the strength of the relationship between soil salinity
+(mScm) and California pickleweed biomass (g), the two appropriate tests
+are Pearson’s ($r$) correlation and Spearman’s ($\rho$) rank
+correlation. Pearson's correlation is a parametric test that measure the
+strength and direction of the relationship between variables (biomass
+and salinity). Spearmans rank correlation is a non-parametric version
+that does not depend on the assumption that the data is normally
+distributed or continuous, and measures the monotonic relationship; the
+data is ranked from smallest to largest and correlation is calculated
+based on the ranked numbers rather than the actual measurements.
 
 ## b. Create a visualization
 
-Create a visualization that would be appropriate for showing the relationship between soil salinity (in mS/cm) and California pickleweed biomass (in g).
-
-In addition to using the correct geometries, be sure to:
-
-relabel the x- and y-axes and include units
-use different colors from the ggplot() defaults
-use a different theme from the ggplot() default
+Create a visualization that would be appropriate for showing the
+relationship between soil salinity (in mS/cm) and California pickleweed
+biomass (in g).
 
 ```{r}
 #| label: data visulaization
@@ -65,12 +83,9 @@ ggplot(data = salinity,
            y = pickleweed)) +
   geom_point(color = "darkgreen",
             alpha = 0.6) + 
-  geom_smooth(method = "lm", 
-              color = "black", 
-              se = TRUE) +
   labs(x = "Soil salinity (mS/cm)",
        y = "Pickleweed biomass (g)",
-       title = "Relationship between Salinity and Pickleweed Biomass") + 
+       title = "As Salinity Increases, Pickleweed Biomass also Increases") + 
   theme_bw()
 
 
@@ -78,94 +93,154 @@ ggplot(data = salinity,
 
 ## c. Check your assumptions and run your test
 
-In the order that is appropriate, create separate sections using subheaders to:
+### 1. check your assumptions
 
-check your assumptions
-run your test
-In the section in which you check your assumptions, include any code and outputs you think are relevant. (Note: you may have already written code and shown its outputs to check your assumptions in part 1b, depending on the test you decide to go with!). Additionally, write 1-3 sentences describing:
+```{r}
+#| label: create model object to fit linear model
+# soil salinity (mScn) as a function of plant biomass (g)
 
-which assumptions you checked
-how you checked your assumptions
-your assessment of your assumption checks
-In the section in which you run your test, be sure your code is annotated and the outputs are visible.
+salinity_model <- lm( # model object using linear model
+  pickleweed ~ salinity_mscm, # formula (response ~ predictor)
+  data = salinity # data frame 
+)
+
+```
+
+```{r}
+#| label: diagnostic plots
+
+# base R residuals 
+par(mfrow = c(2, 2)) # display plots in 2x2 grid
+plot(salinity_model) # plotting residuals of model object 
+
+```
+
+The data shows that the residualas have a constant variance
+(homoscedastic) accross the range of fitted valies according to the
+Residuals vs Fitted and Scale-Location plots as they are evenly and
+randomly distributed. The residuals (errors) seem to be normally
+distributed according to the QQ Residuals plot as the data more or less
+follows a straight line. According to the Residuals vs Leverage plot
+there are no major outliers that might influence model estimates of
+slope or y-intercept.
+
+### run your test
+
+```{r}
+ 
+# more information about the model coefficients (slope and intercept)
+summary(salinity_model)
+```
+
+For each one unit increase in salinity (mScm) there is an increase in
+biomass of 2.08 + 0.72 grams
+
+```{r}
+#| label: visualize model predictions
+
+salinity_preds <- ggpredict( # create prediction object 
+  salinity_model, # model object
+  terms = "salinity_mscm")  # predictor variable 
+
+# display the predictions
+print(salinity_preds, n = Inf) 
+```
+
+```{r}
+#| label: pearson's r correlation test
+
+cor.test(salinity$pickleweed, salinity$salinity_mscm,
+         method = "pearson")
+
+```
+
+There is a moderate relationship between soil salinity (mS/cm) and pickleweed biomass (g) (Pearson's r = 0.53, t(21) = 2.90, p > 0.001, $\alpha$ = 0.05)
+
+linear relationship (visual) variables are continuous (qq plot) normally distributed indeopendent observations
+
+Additionally, write 1-3 sentences describing:
+
+The data shows that the residualas have a constant variance
+(homoscedastic) accross the range of fitted valies according to the
+Residuals vs Fitted and Scale-Location plots as they are evenly and
+randomly distributed. The residuals (errors) seem to be normally
+distributed according to the QQ Residuals plot as the data more or less
+follows a straight line. According to the Residuals vs Leverage plot
+there are no major outliers that might influence model estimates of
+slope or y-intercept.
+
+I checked the assumptions of linearity, homoscedasticity (equal variance), and normality of residuals by visually inspecting the Residuals vs Fitted, Scale-Location, and Normal Q-Q plots generated from the model object. My assessment is that the assumptions are met because the residuals are randomly distributed without a "fan" shape and the Q-Q plot points closely follow the 1:1 diagonal line.
+
+which assumptions you checked how you checked your assumptions your
+assessment of your assumption checks In the section in which you run
+your test, be sure your code is annotated and the outputs are visible.
 
 COMMIT
 
 ## d. Results communication
 
-In 1-3 sentences each, write about:
+To evaluate the strength of the relationship between pickleweed biomass and soil salinity, I used a pearson's r corrleation test. 
 
-which test you used, and why (i.e. “To evaluate the strength of the relationship between pickleweed biomass and soil salinity, I used a…”)
-your interpretation of your test (along with the appropriate summary of the test in parentheses)
+We found a moderate positive relationship between soil salinity (mS/cm) and pickleweed biomass (g) (Pearson's r = 0.53, t(21) = 2.90, p > 0.001, $\alpha$ = 0.05)
 
-
+From our model coefficient estimates, we found that for each one unit
+increase in salinity (mScm) there is an increase in biomass of 2.08 ±
+0.72 grams.
 
 COMMIT
 
-
 ## e. Test implications
 
-You’re working on a team of people at this restoration site who are also concerned about pickleweed planting. In 2-3 sentences, write what you would communicate to them about the results of this test and what it means for pickleweed planting success at your site.
+You’re working on a team of people at this restoration site who are also
+concerned about pickleweed planting. In 2-3 sentences, write what you
+would communicate to them about the results of this test and what it
+means for pickleweed planting success at your site.
 
-Be cognizant of your audience as you are writing: what would they need to know to take action?
-
+Be cognizant of your audience as you are writing: what would they need
+to know to take action?
 
 COMMIT
 
 ## f. Double check your own work.
 
-
-
-
-
-
 # Problem 2. Personal data
 
 ## a. Updating your visualizations
-
 
 ## b. Captions
 
 # Problem 3. Affective visualization
 
+In this problem, you will create an affective visualization using your personal data in preparation for workshops during weeks 9 and 10.
+
+In lecture, we talked about the three vertices of data visualization: 1) exploratory, 2) affective, and 3) communicative. We’ve done a lot of exploratory and communicative visualization, but have yet to think about affective visualization.
+
+When thinking of affective visualization, you can expand your ideas of what data visualization could be. Some examples of affective visualizations include:
+
+Jill Pelto’s paintings
+Lorraine Woodruff-Long’s warming strips quilt
+Stefanie Posavec and Giorgia Lupi’s Dear Data project
+Environmental Graphiti
+See slides from the data visualization lecture for more ideas.
+
 ## a. Describe in words what an affective visualization could look like for your personal data (3-5 sentences).
+
 
 
 ## b. Create a sketch (on paper) of your idea.
 
-
 ## c. Make a draft of your visualization.
-
 
 ## d. Write an artist statement.
 
-
 ## e. Prep your materials to share in class
-
 
 # Problem 4. Statistical critique
 
-
 ## a. Revisit and summarize
-
 
 ## b. Visual clarity
 
-
 ## c. Aesthetic clarity
 
-
 ## d. Recommendations
-
-
-
-
-
-
-
-
-
-
-
-
-
