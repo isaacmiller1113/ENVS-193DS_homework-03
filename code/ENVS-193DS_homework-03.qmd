@@ -34,28 +34,17 @@ salinity <- read_csv(here("data", "salinity-pickleweed.csv")) |>
   clean_names() |>  # Store salinity data
   rename(salinity_mscm = salinity_m_s_cm)
 
-# insert code to read in my data and label it as an object called "my_data"
+# read in my personal data and label it as an object called "my_data"
 my_data <- read_csv(here("data", "my_data_hw3.csv")) |> 
   clean_names()
 
 ```
 
-# Read in my personal data
-
-
-
 # Problem 1. Slough soil salinity
 
-You are working at a restoration site where you are managing planting of
-California pickleweed (Salicornia virginica) along a brackish slough
-(i.e. there is a mixture of fresh water and salt water).
+#### You are working at a restoration site where you are managing planting of California pickleweed (Salicornia virginica) along a brackish slough (i.e. there is a mixture of fresh water and salt water).
 
-You decide to measure plant growth for individual pickleweed plants by
-plucking an individual out of the ground and measuring the biomass (in
-g). You also measure soil salinity (as electrical conductivity in units
-of millisiemens per centimeter, or (mS/cm) at the location in which the
-individual was growing. Admittedly, this isn’t a perfect study, but it’s
-what you can do with the time and resources you have!
+#### You decide to measure plant growth for individual pickleweed plants by plucking an individual out of the ground and measuring the biomass (in grams). You also measure soil salinity (as electrical conductivity in units of millisiemens per centimeter, or (mS/cm) at the location in which the individual was growing. Admittedly, this isn’t a perfect study, but it’s what you can do with the time and resources you have!
 
 ## a. An appropriate test
 
@@ -64,16 +53,14 @@ To determine the strength of the relationship between soil salinity
 are Pearson’s ($r$) correlation and Spearman’s ($\rho$) rank
 correlation. Pearson's correlation is a parametric test that measures the
 strength and direction of the relationship between variables (biomass
-and salinity). Spearmans rank correlation is a non-parametric version, and unlike spearman's, does not depend on the assumption that the data is normally
+and salinity). Spearman's rank correlation is a non-parametric version, and unlike Spearman's, does not depend on the assumption that the data is normally
 distributed or continuous. The test measures the monotonic relationship where the
 data is ranked from smallest to largest and correlation is calculated
 based on the ranked numbers rather than the actual measurements.
 
 ## b. Create a visualization
 
-Create a visualization that would be appropriate for showing the
-relationship between soil salinity (in mS/cm) and California pickleweed
-biomass (in g).
+#### Create a visualization that would be appropriate for showing the relationship between soil salinity (in mS/cm) and California pickleweed biomass (in g).
 
 ```{r}
 #| label: data visulaization
@@ -93,7 +80,9 @@ ggplot(data = salinity,
 
 ## c. Check your assumptions and run your test
 
-### 1. check your assumptions
+### 1. Check your assumptions
+
+I can assume that these are all independent observations taken at separate locations. I can also assume that the there is a linear relationship between response and predictor variables based on the data visualization above, which has a general trend showing that a higher soil salinity corresponds to a higher picklweed biomass.
 
 ```{r}
 #| label: create model object to fit linear model
@@ -103,7 +92,6 @@ salinity_model <- lm( # model object using linear model
   pickleweed ~ salinity_mscm, # formula (response ~ predictor)
   data = salinity # data frame 
 )
-
 ```
 
 ```{r}
@@ -115,7 +103,7 @@ plot(salinity_model) # plotting residuals of model object
 
 ```
 
-The data shows that the residualas have a constant variance
+The diagnostic plots show that the residualas have a constant variance
 (homoscedastic) accross the range of fitted values according to the
 Residuals vs Fitted and Scale-Location plots as they are evenly and
 randomly distributed. The residuals (errors) seem to be normally
@@ -124,7 +112,7 @@ follows a straight line. According to the Residuals vs Leverage plot
 there are no major outliers that might influence model estimates of
 slope or y-intercept.
 
-### run your test
+### 2. Run your test
 
 ```{r}
  
@@ -132,8 +120,7 @@ slope or y-intercept.
 summary(salinity_model)
 ```
 
-For each one unit increase in salinity (mScm) there is an increase in
-biomass of 2.08 + 0.72 grams
+For each one unit increase in salinity (mScm) there is an increase in biomass of 2.08 + 0.72 grams
 
 ```{r}
 #| label: visualize model predictions
@@ -154,40 +141,15 @@ cor.test(salinity$pickleweed, salinity$salinity_mscm,
 
 ```
 
-There is a moderate relationship between soil salinity (mS/cm) and pickleweed biomass (g) (Pearson's r = 0.53, t(21) = 2.90, p > 0.001, $\alpha$ = 0.05)
-
-linear relationship (visual) variables are continuous (qq plot) normally distributed indeopendent observations
-
-Additionally, write 1-3 sentences describing:
-
-The data shows that the residualas have a constant variance
-(homoscedastic) accross the range of fitted valies according to the
-Residuals vs Fitted and Scale-Location plots as they are evenly and
-randomly distributed. The residuals (errors) seem to be normally
-distributed according to the QQ Residuals plot as the data more or less
-follows a straight line. According to the Residuals vs Leverage plot
-there are no major outliers that might influence model estimates of
-slope or y-intercept.
-
-I checked the assumptions of linearity, homoscedasticity (equal variance), and normality of residuals by visually inspecting the Residuals vs Fitted, Scale-Location, and Normal Q-Q plots generated from the model object. My assessment is that the assumptions are met because the residuals are randomly distributed without a "fan" shape and the Q-Q plot points closely follow the 1:1 diagonal line.
-
-which assumptions you checked how you checked your assumptions your
-assessment of your assumption checks In the section in which you run
-your test, be sure your code is annotated and the outputs are visible.
-
-COMMIT
+I evaluated the assumptions for the Pearson's r correlation test, specifically for a linear relationship between soil salinity and pickleweed biomass variables, continuous variables, normally distributed data, and independent observations. I checked these assumptions by inspecting the original data visualization for a linear trend and to assess normality, confirming that both variables were measured on a continuous numeric scale, and ensuring the sampling design produced independent measurements. All of the assumptions are met, as my visual checks showed that the data is linear and normally distributed, the data is continuous, and the measurments are all independent. 
 
 ## d. Results communication
 
-To evaluate the strength of the relationship between pickleweed biomass and soil salinity, I used a pearson's r corrleation test. 
+To evaluate the strength and direction of the relationship between soil salinity (mS/cm) and California pickleweed biomass (g), I used a Pearson’s ($r$) correlation test. This test was chosen because both variables are continuous, a visual inspection of the scatterplot confirmed a linear relationship without significant outliers, and the data is also normally distributed.
 
-We found a moderate positive relationship between soil salinity (mS/cm) and pickleweed biomass (g) (Pearson's r = 0.53, t(21) = 2.90, p > 0.001, $\alpha$ = 0.05)
+We found a moderate (Pearson's r = 0.53) relationship between soil salinity and California pickleweed biomass (g), indicating that as soil salinity increases, there is a corresponding increase in pickleweed biomass. (Pearson's r = 0.53, t(21) = 2.90, p > 0.001, $\alpha$ = 0.05) 
 
-From our model coefficient estimates, we found that for each one unit
-increase in salinity (mScm) there is an increase in biomass of 2.08 ±
-0.72 grams.
-
-COMMIT
+From our model coefficient estimates, we found that for each one unit increase in salinity (mScm) there is an increase in biomass of 2.08 ± 0.72 grams, which suggests that the growth of California pickleweed is positively associated with higher salt concentrations in the soil within the observed range. 
 
 ## e. Test implications
 
