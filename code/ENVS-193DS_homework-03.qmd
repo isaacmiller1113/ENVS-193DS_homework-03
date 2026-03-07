@@ -195,7 +195,7 @@ ggplot(my_data, # start with my data frame
   theme(legend.position = "none")  # Remove legend since x-axis already shows the categories
 ```
 
-### Visualization 2. Linear regression
+### Visualization 2. Linear regression (new)
 
 ```{r}
 #| label: cleaning data for new visulatization 
@@ -293,29 +293,11 @@ ggplot(data = data_clean,
   theme_minimal()
 ```
 
-### Old visualization (updated):
-
-```{r}
-ggplot(my_data, # start with my data
-       aes(x = `time_spent_on_work_min`, 
-           y = `total_physical_activity_min`)) +
-  geom_point(size = 2, 
-             color = "red", 
-             alpha = 0.7) +  # Custom red color for points
-  labs( # change the text for x and y axis and the title
-    x = "Total School Time (minutes)",
-    y = "Total Physical Activity (minutes)",
-    title = "School Work Time vs. Physical Activity Time",
-    subtitle = "Most Recent Observation as of 03-04-2026"
-  ) +
-  theme_bw() +  # black and white theme
-  theme(
-    plot.title = element_text(hjust = 0.5, # Center title
-                              face = "bold"),  # Bold title
-  )
-```
-
 ## b. Captions
+
+**Figure 1: Comparison of Activity Duration by School Day Status.** This boxplot compares physical activity duration (minutes) between days with on-campus classes ("yes") and those without ("no"), where the teal and red boxes represent the interquartile range and the central horizontal line marks the median. Circular points represent individual days of activity in their respective categories with coresponding colors. The categorical predictor, School Day (x-axis), is plotted against the continuous response, Total Physical Activity (y-axis) in minutes, showing a clear divergence in habits. Non-school days maintain a substantially higher median (approx. 76.5 min) compared to school days (0 min). Statistically, the narrow distribution for on-campus days indicates that academic scheduling consistently restricts physical movement to a minimum, whereas non-school days means significant flexibility and peak activity duration.
+
+**Figure 2: Linear Regression of School Time and Activity.** This scatterplot and linear regression visualize the trade off between academic commitment and physical movement over a 42-day period, with red colored circular points representing individual daily observations of total school time and corresponding total activity time. The analysis utilizes Total School Time (x-axis, in minutes) as the predictor and Total Activity Time (y-axis, in minutes) as the response, featuring a solid black trend line for predicted values and a grey shaded "ribbon" representing the 95% confidence interval. The model reveals a statistically significant negative relationship ($p = 0.009$), where the downward slope quantifies a decrease of approximately 0.23 minutes of activity for every one-minute increase in school time, confirming that high-volume academic days act as the primary constraint on physical exercise.
 
 # Problem 3. Affective visualization
 
