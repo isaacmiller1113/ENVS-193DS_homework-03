@@ -153,17 +153,20 @@ From our model coefficient estimates, we found that for each one unit increase i
 
 ## e. Test implications
 
-You’re working on a team of people at this restoration site who are also
-concerned about pickleweed planting. In 2-3 sentences, write what you
-would communicate to them about the results of this test and what it
-means for pickleweed planting success at your site.
+#### You’re working on a team of people at this restoration site who are also concerned about pickleweed planting. In 2-3 sentences, write what you would communicate to them about the results of this test and what it means for pickleweed planting success at your site.
 
-Be cognizant of your audience as you are writing: what would they need
-to know to take action?
-
-COMMIT
+Our data shows a moderate positive correlation between soil salinity and California pickleweed biomass, meaning that higher soil salt levels at our site actually promote more plant growth. Based on these results, we should prioritize restoration efforts in saltier patches to maximize planting success and biomass establishment. This allows us to use soil salinity as a key metric for identifying the most suitable locations for planting.
 
 ## f. Double check your own work.
+
+```{r}
+#| label: Spearman rank correlation
+
+cor.test(salinity$pickleweed, salinity$salinity_mscm,
+         method = "spearman")
+```
+
+Both the Pearson’s $r$ ($r = 0.53, p = 0.009$) and the Spearman’s $\rho$ ($\rho = 0.59, p = 0.003$) would have led to the same decision to reject the null hypothesis, as both p-values are well below the $\alpha$ = 0.05 threshold. While both tests confirm a significant positive relationship between soil salinity and pickleweed biomass, the Spearman’s test yields a slightly stronger correlation coefficient and a higher level of significance, but in general they represent the same relationship. This suggests that while the relationship is linear enough for Pearson’s, the monotonic (rank-order) relationship between salinity and biomass is even more consistent across the data set.
 
 # Problem 2. Personal data
 
