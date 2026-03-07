@@ -22,6 +22,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -36,6 +70,35 @@ ul.task-list li input[type="checkbox"] {
 <link href="ENVS-193DS_homework-03_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="ENVS-193DS_homework-03_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -48,6 +111,43 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#set-up" id="toc-set-up" class="nav-link active" data-scroll-target="#set-up">Set Up</a></li>
+  <li><a href="#problem-1.-slough-soil-salinity" id="toc-problem-1.-slough-soil-salinity" class="nav-link" data-scroll-target="#problem-1.-slough-soil-salinity">Problem 1. Slough soil salinity</a>
+  <ul class="collapse">
+  <li><a href="#a.-an-appropriate-test" id="toc-a.-an-appropriate-test" class="nav-link" data-scroll-target="#a.-an-appropriate-test">a. An appropriate test</a></li>
+  <li><a href="#b.-create-a-visualization" id="toc-b.-create-a-visualization" class="nav-link" data-scroll-target="#b.-create-a-visualization">b. Create a visualization</a></li>
+  <li><a href="#c.-check-your-assumptions-and-run-your-test" id="toc-c.-check-your-assumptions-and-run-your-test" class="nav-link" data-scroll-target="#c.-check-your-assumptions-and-run-your-test">c.&nbsp;Check your assumptions and run your test</a>
+  <ul class="collapse">
+  <li><a href="#check-your-assumptions" id="toc-check-your-assumptions" class="nav-link" data-scroll-target="#check-your-assumptions">1. Check your assumptions</a></li>
+  <li><a href="#run-your-test" id="toc-run-your-test" class="nav-link" data-scroll-target="#run-your-test">2. Run your test</a></li>
+  </ul></li>
+  <li><a href="#d.-results-communication" id="toc-d.-results-communication" class="nav-link" data-scroll-target="#d.-results-communication">d.&nbsp;Results communication</a></li>
+  <li><a href="#e.-test-implications" id="toc-e.-test-implications" class="nav-link" data-scroll-target="#e.-test-implications">e. Test implications</a></li>
+  <li><a href="#f.-double-check-your-own-work." id="toc-f.-double-check-your-own-work." class="nav-link" data-scroll-target="#f.-double-check-your-own-work.">f.&nbsp;Double check your own work.</a></li>
+  </ul></li>
+  <li><a href="#problem-2.-personal-data" id="toc-problem-2.-personal-data" class="nav-link" data-scroll-target="#problem-2.-personal-data">Problem 2. Personal data</a>
+  <ul class="collapse">
+  <li><a href="#a.-updating-your-visualizations" id="toc-a.-updating-your-visualizations" class="nav-link" data-scroll-target="#a.-updating-your-visualizations">a. Updating your visualizations</a>
+  <ul class="collapse">
+  <li><a href="#visualization-1.-physical-activity-on-school-vs.-non-school-days" id="toc-visualization-1.-physical-activity-on-school-vs.-non-school-days" class="nav-link" data-scroll-target="#visualization-1.-physical-activity-on-school-vs.-non-school-days">Visualization 1. Physical activity on school vs.&nbsp;non-school days</a></li>
+  <li><a href="#visualization-2.-linear-regression-new" id="toc-visualization-2.-linear-regression-new" class="nav-link" data-scroll-target="#visualization-2.-linear-regression-new">Visualization 2. Linear regression (new)</a></li>
+  </ul></li>
+  <li><a href="#b.-captions" id="toc-b.-captions" class="nav-link" data-scroll-target="#b.-captions">b. Captions</a></li>
+  </ul></li>
+  <li><a href="#problem-3.-affective-visualization" id="toc-problem-3.-affective-visualization" class="nav-link" data-scroll-target="#problem-3.-affective-visualization">Problem 3. Affective visualization</a>
+  <ul class="collapse">
+  <li><a href="#a.-describe-in-words-what-an-affective-visualization-could-look-like-for-your-personal-data-3-5-sentences." id="toc-a.-describe-in-words-what-an-affective-visualization-could-look-like-for-your-personal-data-3-5-sentences." class="nav-link" data-scroll-target="#a.-describe-in-words-what-an-affective-visualization-could-look-like-for-your-personal-data-3-5-sentences.">a. Describe in words what an affective visualization could look like for your personal data (3-5 sentences).</a></li>
+  <li><a href="#b.-create-a-sketch-on-paper-of-your-idea." id="toc-b.-create-a-sketch-on-paper-of-your-idea." class="nav-link" data-scroll-target="#b.-create-a-sketch-on-paper-of-your-idea.">b. Create a sketch (on paper) of your idea.</a></li>
+  <li><a href="#c.-make-a-draft-of-your-visualization." id="toc-c.-make-a-draft-of-your-visualization." class="nav-link" data-scroll-target="#c.-make-a-draft-of-your-visualization.">c.&nbsp;Make a draft of your visualization.</a></li>
+  <li><a href="#d.-write-an-artist-statement." id="toc-d.-write-an-artist-statement." class="nav-link" data-scroll-target="#d.-write-an-artist-statement.">d.&nbsp;Write an artist statement.</a></li>
+  <li><a href="#e.-prep-your-materials-to-share-in-class" id="toc-e.-prep-your-materials-to-share-in-class" class="nav-link" data-scroll-target="#e.-prep-your-materials-to-share-in-class">e. Prep your materials to share in class</a></li>
+  </ul></li>
+  <li><a href="#problem-4.-statistical-critique" id="toc-problem-4.-statistical-critique" class="nav-link" data-scroll-target="#problem-4.-statistical-critique">Problem 4. Statistical critique</a>
+  <ul class="collapse">
+  <li><a href="#a.-revisit-and-summarize" id="toc-a.-revisit-and-summarize" class="nav-link" data-scroll-target="#a.-revisit-and-summarize">a. Revisit and summarize</a></li>
+  <li><a href="#b.-visual-clarity" id="toc-b.-visual-clarity" class="nav-link" data-scroll-target="#b.-visual-clarity">b. Visual clarity</a></li>
+  <li><a href="#c.-aesthetic-clarity" id="toc-c.-aesthetic-clarity" class="nav-link" data-scroll-target="#c.-aesthetic-clarity">c.&nbsp;Aesthetic clarity</a></li>
+  <li><a href="#d.-recommendations" id="toc-d.-recommendations" class="nav-link" data-scroll-target="#d.-recommendations">d.&nbsp;Recommendations</a></li>
+  </ul></li>
   </ul>
 </nav>
 </div>
@@ -86,7 +186,434 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="set-up" class="level1">
 <h1>Set Up</h1>
-<p><a href="https://isaacmiller1113.github.io/ENVS-193DS_homework-03/">Link to my GitHub Repository</a></p>
+<p><a href="https://isaacmiller1113.github.io/ENVS-193DS_homework-03/code/ENVS-193DS_homework-03.html">Link to my GitHub Repository</a></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load in packages</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)     <span class="co"># general use</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)          <span class="co"># managing file paths relative to project root</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)       <span class="co"># cleaning data frames</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)        <span class="co"># importing data from excel files (.xls or .xlsx)</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggeffects)     <span class="co"># generating model predictions</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)     <span class="co"># generating summary tables for models</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MuMIn)         <span class="co"># model selection and model inference</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom.helpers) <span class="co"># tidying and labeling model outputs</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Read in data objects</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>salinity <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"salinity-pickleweed.csv"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span>  <span class="co"># Store salinity data</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">salinity_mscm =</span> salinity_m_s_cm)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># read in my personal data and label it as an object called "my_data"</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>my_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"my_data_hw3.csv"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="problem-1.-slough-soil-salinity" class="level1">
+<h1>Problem 1. Slough soil salinity</h1>
+<section id="you-are-working-at-a-restoration-site-where-you-are-managing-planting-of-california-pickleweed-salicornia-virginica-along-a-brackish-slough-i.e.-there-is-a-mixture-of-fresh-water-and-salt-water." class="level4">
+<h4 class="anchored" data-anchor-id="you-are-working-at-a-restoration-site-where-you-are-managing-planting-of-california-pickleweed-salicornia-virginica-along-a-brackish-slough-i.e.-there-is-a-mixture-of-fresh-water-and-salt-water.">You are working at a restoration site where you are managing planting of California pickleweed (Salicornia virginica) along a brackish slough (i.e.&nbsp;there is a mixture of fresh water and salt water).</h4>
+</section>
+<section id="you-decide-to-measure-plant-growth-for-individual-pickleweed-plants-by-plucking-an-individual-out-of-the-ground-and-measuring-the-biomass-in-grams.-you-also-measure-soil-salinity-as-electrical-conductivity-in-units-of-millisiemens-per-centimeter-or-mscm-at-the-location-in-which-the-individual-was-growing.-admittedly-this-isnt-a-perfect-study-but-its-what-you-can-do-with-the-time-and-resources-you-have" class="level4">
+<h4 class="anchored" data-anchor-id="you-decide-to-measure-plant-growth-for-individual-pickleweed-plants-by-plucking-an-individual-out-of-the-ground-and-measuring-the-biomass-in-grams.-you-also-measure-soil-salinity-as-electrical-conductivity-in-units-of-millisiemens-per-centimeter-or-mscm-at-the-location-in-which-the-individual-was-growing.-admittedly-this-isnt-a-perfect-study-but-its-what-you-can-do-with-the-time-and-resources-you-have">You decide to measure plant growth for individual pickleweed plants by plucking an individual out of the ground and measuring the biomass (in grams). You also measure soil salinity (as electrical conductivity in units of millisiemens per centimeter, or (mS/cm) at the location in which the individual was growing. Admittedly, this isn’t a perfect study, but it’s what you can do with the time and resources you have!</h4>
+</section>
+<section id="a.-an-appropriate-test" class="level2">
+<h2 class="anchored" data-anchor-id="a.-an-appropriate-test">a. An appropriate test</h2>
+<p>To determine the strength of the relationship between soil salinity (mScm) and California pickleweed biomass (g), the two appropriate tests are Pearson’s (<span class="math inline">\(r\)</span>) correlation and Spearman’s (<span class="math inline">\(\rho\)</span>) rank correlation. Pearson’s correlation is a parametric test that measures the strength and direction of the relationship between variables (biomass and salinity). Spearman’s rank correlation is a non-parametric version, and unlike Spearman’s, does not depend on the assumption that the data is normally distributed or continuous. The test measures the monotonic relationship where the data is ranked from smallest to largest and correlation is calculated based on the ranked numbers rather than the actual measurements.</p>
+</section>
+<section id="b.-create-a-visualization" class="level2">
+<h2 class="anchored" data-anchor-id="b.-create-a-visualization">b. Create a visualization</h2>
+<section id="create-a-visualization-that-would-be-appropriate-for-showing-the-relationship-between-soil-salinity-in-mscm-and-california-pickleweed-biomass-in-g." class="level4">
+<h4 class="anchored" data-anchor-id="create-a-visualization-that-would-be-appropriate-for-showing-the-relationship-between-soil-salinity-in-mscm-and-california-pickleweed-biomass-in-g.">Create a visualization that would be appropriate for showing the relationship between soil salinity (in mS/cm) and California pickleweed biomass (in g).</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> salinity,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> salinity_mscm,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> pickleweed)) <span class="sc">+</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"darkgreen"</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span> </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Soil salinity (mS/cm)"</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Pickleweed biomass (g)"</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"As Salinity Increases, Pickleweed Biomass also Increases"</span>) <span class="sc">+</span> </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ENVS-193DS_homework-03_files/figure-html/data%20visulaization-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="c.-check-your-assumptions-and-run-your-test" class="level2">
+<h2 class="anchored" data-anchor-id="c.-check-your-assumptions-and-run-your-test">c.&nbsp;Check your assumptions and run your test</h2>
+<section id="check-your-assumptions" class="level3">
+<h3 class="anchored" data-anchor-id="check-your-assumptions">1. Check your assumptions</h3>
+<p>I can assume that these are all independent observations taken at separate locations. I can also assume that the there is a linear relationship between response and predictor variables based on the data visualization above, which has a general trend showing that a higher soil salinity corresponds to a higher picklweed biomass.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># soil salinity (mScn) as a function of plant biomass (g)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>salinity_model <span class="ot">&lt;-</span> <span class="fu">lm</span>( <span class="co"># model object using linear model</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  pickleweed <span class="sc">~</span> salinity_mscm, <span class="co"># formula (response ~ predictor)</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> salinity <span class="co"># data frame </span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># base R residuals </span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>)) <span class="co"># display plots in 2x2 grid</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(salinity_model) <span class="co"># plotting residuals of model object </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ENVS-193DS_homework-03_files/figure-html/diagnostic%20plots-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The diagnostic plots show that the residualas have a constant variance (homoscedastic) accross the range of fitted values according to the Residuals vs Fitted and Scale-Location plots as they are evenly and randomly distributed. The residuals (errors) seem to be normally distributed according to the QQ Residuals plot as the data more or less follows a straight line. According to the Residuals vs Leverage plot there are no major outliers that might influence model estimates of slope or y-intercept.</p>
+</section>
+<section id="run-your-test" class="level3">
+<h3 class="anchored" data-anchor-id="run-your-test">2. Run your test</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># more information about the model coefficients (slope and intercept)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(salinity_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = pickleweed ~ salinity_mscm, data = salinity)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-12.499  -5.819  -1.726   4.794  21.765 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)   
+(Intercept)    13.0895     4.0350   3.244  0.00389 **
+salinity_mscm   2.0832     0.7188   2.898  0.00860 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 9.144 on 21 degrees of freedom
+Multiple R-squared:  0.2857,    Adjusted R-squared:  0.2517 
+F-statistic: 8.398 on 1 and 21 DF,  p-value: 0.008605</code></pre>
+</div>
+</div>
+<p>For each one unit increase in salinity (mScm) there is an increase in biomass of 2.08 + 0.72 grams</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>salinity_preds <span class="ot">&lt;-</span> <span class="fu">ggpredict</span>( <span class="co"># create prediction object </span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  salinity_model, <span class="co"># model object</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">terms =</span> <span class="st">"salinity_mscm"</span>)  <span class="co"># predictor variable </span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># display the predictions</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(salinity_preds, <span class="at">n =</span> <span class="cn">Inf</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Predicted values of pickleweed
+
+salinity_mscm | Predicted |       95% CI
+----------------------------------------
+            0 |     13.09 |  4.70, 21.48
+            1 |     15.17 |  8.06, 22.28
+            2 |     17.26 | 11.33, 23.18
+            3 |     19.34 | 14.42, 24.26
+            4 |     21.42 | 17.21, 25.63
+            5 |     23.51 | 19.54, 27.47
+            6 |     25.59 | 21.32, 29.85
+            7 |     27.67 | 22.66, 32.69
+            8 |     29.75 | 23.71, 35.80
+            9 |     31.84 | 24.60, 39.08
+           10 |     33.92 | 25.39, 42.45</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(salinity<span class="sc">$</span>pickleweed, salinity<span class="sc">$</span>salinity_mscm,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">method =</span> <span class="st">"pearson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  salinity$pickleweed and salinity$salinity_mscm
+t = 2.8979, df = 21, p-value = 0.008605
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.1568265 0.7757682
+sample estimates:
+      cor 
+0.5344778 </code></pre>
+</div>
+</div>
+<p>I evaluated the assumptions for the Pearson’s r correlation test, specifically for a linear relationship between soil salinity and pickleweed biomass variables, continuous variables, normally distributed data, and independent observations. I checked these assumptions by inspecting the original data visualization for a linear trend and to assess normality, confirming that both variables were measured on a continuous numeric scale, and ensuring the sampling design produced independent measurements. All of the assumptions are met, as my visual checks showed that the data is linear and normally distributed, the data is continuous, and the measurments are all independent.</p>
+</section>
+</section>
+<section id="d.-results-communication" class="level2">
+<h2 class="anchored" data-anchor-id="d.-results-communication">d.&nbsp;Results communication</h2>
+<p>To evaluate the strength and direction of the relationship between soil salinity (mS/cm) and California pickleweed biomass (g), I used a Pearson’s (<span class="math inline">\(r\)</span>) correlation test. This test was chosen because both variables are continuous, a visual inspection of the scatterplot confirmed a linear relationship without significant outliers, and the data is also normally distributed.</p>
+<p>We found a moderate (Pearson’s r = 0.53) relationship between soil salinity and California pickleweed biomass (g), indicating that as soil salinity increases, there is a corresponding increase in pickleweed biomass. (Pearson’s r = 0.53, t(21) = 2.90, p &gt; 0.001, <span class="math inline">\(\alpha\)</span> = 0.05)</p>
+<p>From our model coefficient estimates, we found that for each one unit increase in salinity (mScm) there is an increase in biomass of 2.08 ± 0.72 grams, which suggests that the growth of California pickleweed is positively associated with higher salt concentrations in the soil within the observed range.</p>
+</section>
+<section id="e.-test-implications" class="level2">
+<h2 class="anchored" data-anchor-id="e.-test-implications">e. Test implications</h2>
+<section id="youre-working-on-a-team-of-people-at-this-restoration-site-who-are-also-concerned-about-pickleweed-planting.-in-2-3-sentences-write-what-you-would-communicate-to-them-about-the-results-of-this-test-and-what-it-means-for-pickleweed-planting-success-at-your-site." class="level4">
+<h4 class="anchored" data-anchor-id="youre-working-on-a-team-of-people-at-this-restoration-site-who-are-also-concerned-about-pickleweed-planting.-in-2-3-sentences-write-what-you-would-communicate-to-them-about-the-results-of-this-test-and-what-it-means-for-pickleweed-planting-success-at-your-site.">You’re working on a team of people at this restoration site who are also concerned about pickleweed planting. In 2-3 sentences, write what you would communicate to them about the results of this test and what it means for pickleweed planting success at your site.</h4>
+<p>Our data shows a moderate positive correlation between soil salinity and California pickleweed biomass, meaning that higher soil salt levels at our site actually promote more plant growth. Based on these results, we should prioritize restoration efforts in saltier patches to maximize planting success and biomass establishment. This allows us to use soil salinity as a key metric for identifying the most suitable locations for planting.</p>
+</section>
+</section>
+<section id="f.-double-check-your-own-work." class="level2">
+<h2 class="anchored" data-anchor-id="f.-double-check-your-own-work.">f.&nbsp;Double check your own work.</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(salinity<span class="sc">$</span>pickleweed, salinity<span class="sc">$</span>salinity_mscm,</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">method =</span> <span class="st">"spearman"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Spearman's rank correlation rho
+
+data:  salinity$pickleweed and salinity$salinity_mscm
+S = 824, p-value = 0.003426
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+      rho 
+0.5928854 </code></pre>
+</div>
+</div>
+<p>Both the Pearson’s <span class="math inline">\(r\)</span> (<span class="math inline">\(r = 0.53, p = 0.009\)</span>) and the Spearman’s <span class="math inline">\(\rho\)</span> (<span class="math inline">\(\rho = 0.59, p = 0.003\)</span>) would have led to the same decision to reject the null hypothesis, as both p-values are well below the <span class="math inline">\(\alpha\)</span> = 0.05 threshold. While both tests confirm a significant positive relationship between soil salinity and pickleweed biomass, the Spearman’s test yields a slightly stronger correlation coefficient and a higher level of significance, but in general they represent the same relationship. This suggests that while the relationship is linear enough for Pearson’s, the monotonic (rank-order) relationship between salinity and biomass is even more consistent across the data set.</p>
+</section>
+</section>
+<section id="problem-2.-personal-data" class="level1">
+<h1>Problem 2. Personal data</h1>
+<section id="a.-updating-your-visualizations" class="level2">
+<h2 class="anchored" data-anchor-id="a.-updating-your-visualizations">a. Updating your visualizations</h2>
+<section id="visualization-1.-physical-activity-on-school-vs.-non-school-days" class="level3">
+<h3 class="anchored" data-anchor-id="visualization-1.-physical-activity-on-school-vs.-non-school-days">Visualization 1. Physical activity on school vs.&nbsp;non-school days</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(my_data, <span class="co"># start with my data frame</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">on_campus_class</span><span class="st">`</span>, <span class="co"># x-axis is school day (yes/no) -&gt; categorical predictor</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> <span class="st">`</span><span class="at">total_physical_activity_min</span><span class="st">`</span>, <span class="at">fill =</span> <span class="st">`</span><span class="at">on_campus_class</span><span class="st">`</span>)) <span class="sc">+</span> <span class="co"># y-axis is total physical activity -&gt; response variable</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span> <span class="co"># make a boxplot, </span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.2</span>, <span class="co"># make a jitter</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">size =</span> <span class="dv">3</span>, </span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.8</span>, </span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">shape =</span> <span class="dv">21</span>, </span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span>  </span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>( <span class="co"># change the text for x and y axis and the title</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"School Day"</span>, </span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Total Physical Activity (minutes)"</span>,</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Physical Activity Duration on School vs. Non-School Days"</span>,</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Most Recent Observation as of 03-04-2026"</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"yes"</span> <span class="ot">=</span> <span class="st">"#2E86AB"</span>, <span class="st">"no"</span> <span class="ot">=</span> <span class="st">"#A23B72"</span>)) <span class="sc">+</span>  <span class="co"># Customize the colors</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>() <span class="sc">+</span>  <span class="co"># Different theme from default</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)  <span class="co"># Remove legend since x-axis already shows the categories</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ENVS-193DS_homework-03_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="visualization-2.-linear-regression-new" class="level3">
+<h3 class="anchored" data-anchor-id="visualization-2.-linear-regression-new">Visualization 2. Linear regression (new)</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creating a new object called data_clean from the my_datadata frame</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>data_clean <span class="ot">&lt;-</span> my_data <span class="sc">|&gt;</span> </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># cleaning column names</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># calculate total school time (class + work)</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">total_school_time =</span> <span class="st">`</span><span class="at">time_spent_in_class_min</span><span class="st">`</span> <span class="sc">+</span> <span class="st">`</span><span class="at">time_spent_on_work_min</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># selected the comlumns of interest </span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(total_school_time, total_physical_activity_min) <span class="sc">|&gt;</span> </span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># renaming the activity time for clarity </span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">total_activity_time =</span> total_physical_activity_min)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># base layer: ggplot </span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> data_clean, <span class="co"># starting with clean data frame</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> total_activity_time, <span class="co"># xaxis is acticity time (response)</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> total_school_time)) <span class="sc">+</span> <span class="co"># yaxis is change in school time (predioctor)</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># first layer: points to represent individual days of activity </span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">4</span>, </span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">stroke =</span> <span class="dv">1</span>,</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">fill =</span> <span class="st">"firebrick4"</span>,</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">shape =</span> <span class="dv">21</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ENVS-193DS_homework-03_files/figure-html/Exploratory%20data%20visualization-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>activity_model <span class="ot">&lt;-</span> <span class="fu">lm</span>( <span class="co"># create the linear model object </span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  total_activity_time <span class="sc">~</span> total_school_time, <span class="co"># formula: response variable ~ predictor variable</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> data_clean      <span class="co"># data: clean_data frame </span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))   <span class="co"># displaying diagnostic plots in 2x2 grid</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(activity_model)    <span class="co"># plotting diagnostics</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ENVS-193DS_homework-03_files/figure-html/activity%20model%20diagnostics-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># more information about the model</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(activity_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = total_activity_time ~ total_school_time, data = data_clean)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-97.16 -56.01 -13.57  29.16 235.41 
+
+Coefficients:
+                   Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)       124.59211   19.62437   6.349 1.53e-07 ***
+total_school_time  -0.22862    0.06927  -3.300  0.00204 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 81.3 on 40 degrees of freedom
+Multiple R-squared:  0.214, Adjusted R-squared:  0.1944 
+F-statistic: 10.89 on 1 and 40 DF,  p-value: 0.002037</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creating a new object called activity_preds</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>activity_preds <span class="ot">&lt;-</span> <span class="fu">ggpredict</span>(</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  activity_model, <span class="co"># model object</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">terms =</span> <span class="st">"total_school_time"</span>   <span class="co"># predictor (in quotation marks)</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># display the predictions</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(activity_preds, <span class="at">n =</span> <span class="cn">Inf</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Predicted values of total_activity_time
+
+total_school_time | Predicted |          95% CI
+-----------------------------------------------
+                0 |    124.59 |   84.93, 164.25
+              120 |     97.16 |   68.34, 125.98
+              150 |     90.30 |   63.22, 117.37
+              180 |     83.44 |   57.54, 109.34
+              190 |     81.15 |   55.50, 106.81
+              210 |     76.58 |   51.20, 101.96
+              240 |     69.72 |   44.18,  95.27
+              270 |     62.86 |   36.48,  89.25
+              300 |     56.01 |   28.17,  83.85
+              330 |     49.15 |   19.33,  78.97
+              350 |     44.58 |   13.19,  75.96
+              360 |     42.29 |   10.06,  74.52
+              450 |     21.71 |  -19.51,  62.93
+              480 |     14.85 |  -29.75,  59.46
+              510 |      8.00 |  -40.13,  56.12
+              540 |      1.14 |  -50.60,  52.88
+              780 |    -53.73 | -136.42,  28.95</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># base layer: ggplot</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co"># using clean data frame</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> data_clean,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> total_activity_time, <span class="co"># xaxis is acticity time (response)</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> total_school_time)) <span class="sc">+</span> <span class="co"># yaxis is change in school time (predioctor)</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># first layer: points representing activities</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">4</span>,</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">stroke =</span> <span class="dv">1</span>,</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">fill =</span> <span class="st">"firebrick4"</span>,</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">shape =</span> <span class="dv">21</span>) <span class="sc">+</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># second layer: ribbon representing confidence interval</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># using predictions data frame</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data =</span> activity_preds,</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="co"># described by column x </span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> predicted,</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ymin =</span> conf.low, <span class="co"># lower bound </span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ymax =</span> conf.high), <span class="co"># upper bound</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># third layer: line representing model predictions</span></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># using predictions data frame</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> activity_preds,</span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> x,</span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> predicted)) <span class="sc">+</span></span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># axis labels</span></span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Total Activity Time (min)"</span>, </span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Total School Time (min)"</span>,</span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Predicted Values of Activity Time vs School Time"</span>,</span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Most Recent Observation as of 03-04-2026"</span></span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a>       ) <span class="sc">+</span></span>
+<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a>  <span class="co"># better framing for the data</span></span>
+<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">500</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">400</span>)) <span class="sc">+</span></span>
+<span id="cb22-32"><a href="#cb22-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># theme</span></span>
+<span id="cb22-33"><a href="#cb22-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ENVS-193DS_homework-03_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="b.-captions" class="level2">
+<h2 class="anchored" data-anchor-id="b.-captions">b. Captions</h2>
+<p><strong>Figure 1: Comparison of Activity Duration by School Day Status.</strong> This boxplot compares physical activity duration (minutes) between days with on-campus classes (“yes”) and those without (“no”), where the teal and red boxes represent the interquartile range and the central horizontal line marks the median. Circular points represent individual days of activity in their respective categories with coresponding colors. The categorical predictor, School Day (x-axis), is plotted against the continuous response, Total Physical Activity (y-axis) in minutes, showing a clear divergence in habits. Non-school days maintain a substantially higher median (approx. 76.5 min) compared to school days (0 min). Statistically, the narrow distribution for on-campus days indicates that academic scheduling consistently restricts physical movement to a minimum, whereas non-school days means significant flexibility and peak activity duration.</p>
+<p><strong>Figure 2: Linear Regression of School Time and Activity.</strong> This scatterplot and linear regression visualize the trade off between academic commitment and physical movement over a 42-day period, with red colored circular points representing individual daily observations of total school time and corresponding total activity time. The analysis utilizes Total School Time (x-axis, in minutes) as the predictor and Total Activity Time (y-axis, in minutes) as the response, featuring a solid black trend line for predicted values and a grey shaded “ribbon” representing the 95% confidence interval. The model reveals a statistically significant negative relationship (<span class="math inline">\(p = 0.009\)</span>), where the downward slope quantifies a decrease of approximately 0.23 minutes of activity for every one-minute increase in school time, confirming that high-volume academic days act as the primary constraint on physical exercise.</p>
+</section>
+</section>
+<section id="problem-3.-affective-visualization" class="level1">
+<h1>Problem 3. Affective visualization</h1>
+<p>In this problem, you will create an affective visualization using your personal data in preparation for workshops during weeks 9 and 10.</p>
+<p>In lecture, we talked about the three vertices of data visualization: 1) exploratory, 2) affective, and 3) communicative. We’ve done a lot of exploratory and communicative visualization, but have yet to think about affective visualization.</p>
+<p>When thinking of affective visualization, you can expand your ideas of what data visualization could be. Some examples of affective visualizations include:</p>
+<section id="a.-describe-in-words-what-an-affective-visualization-could-look-like-for-your-personal-data-3-5-sentences." class="level2">
+<h2 class="anchored" data-anchor-id="a.-describe-in-words-what-an-affective-visualization-could-look-like-for-your-personal-data-3-5-sentences.">a. Describe in words what an affective visualization could look like for your personal data (3-5 sentences).</h2>
+<p>An affective visualization of my personal data could be illustrated as a swamp landscape divided into land above the water and murky water below. The water represents the time I spend on schoolwork, with objects like assignments, books, and study materials submerged in the swamp. Above the water on dry land are objects that represent my physical activities, such as a surfboard, running shoe, skateboard, dumbbells, and snorkeling gear. An hourglass placed at the center of the scene represents the passage of time and how school responsibilities accumulate throughout my schedule. This visualization focuses on expressing the feeling of being “swamped” by schoolwork while still showing the activities I try to maintain outside of school.</p>
+</section>
+<section id="b.-create-a-sketch-on-paper-of-your-idea." class="level2">
+<h2 class="anchored" data-anchor-id="b.-create-a-sketch-on-paper-of-your-idea.">b. Create a sketch (on paper) of your idea.</h2>
+<p>[<img src="swamp.jpeg" class="img-fluid" alt="Paper sketch of my idea">]</p>
+</section>
+<section id="c.-make-a-draft-of-your-visualization." class="level2">
+<h2 class="anchored" data-anchor-id="c.-make-a-draft-of-your-visualization.">c.&nbsp;Make a draft of your visualization.</h2>
+<p>[<img src="swamp_draw.jpg" class="img-fluid" alt="Draft of my idea">]</p>
+</section>
+<section id="d.-write-an-artist-statement." class="level2">
+<h2 class="anchored" data-anchor-id="d.-write-an-artist-statement.">d.&nbsp;Write an artist statement.</h2>
+<p><strong>Content</strong> This piece visualizes how my time is divided between school responsibilities and physical activities. The swamp water represents the time I spend on schoolwork, with objects like assignments, books, and study materials submerged beneath the surface. Above the water, items such as a surfboard, running shoe, skateboard, and gym weights represent the physical activities that exist outside of my academic responsibilities. The hourglass at the center represents the passage of time and how school demands can gradually fill and dominate my schedule.</p>
+<p><strong>Influences</strong> My visualization was influenced by the concept of affective data visualization, which emphasizes communicating emotions and experiences through creative imagery rather than traditional charts. I was also inspired by illustrated environmental scenes and cross-section drawings that show what exists above and below the surface of landscapes. These influences helped me convey the feeling of being “swamped” by schoolwork.</p>
+<p><strong>Form</strong> This work is a hand-drawn digital illustration created in a simple black-and-white line drawing style. The piece uses a cross-section view of a swamp landscape to visually separate school time below the water from physical activities on land.</p>
+<p><strong>Process</strong> I began by placing the hourglass at the center of the composition to emphasize the passage of time and the accumulation of school commitments. I then added symbolic objects representing schoolwork and physical activities to reflect how my time is distributed. Along the way i sketched the overall swamp landscape and dividing the image into above water and underwater sections.</p>
+</section>
+<section id="e.-prep-your-materials-to-share-in-class" class="level2">
+<h2 class="anchored" data-anchor-id="e.-prep-your-materials-to-share-in-class">e. Prep your materials to share in class</h2>
+<p><a href="https://docs.google.com/presentation/d/1Klz4RQpkrV2Ir5brsZGqftRX23nkccEKUgrjkcJ4VjM/edit?usp=sharing">Click here to view my Google Slides: The Swamp</a></p>
+</section>
+</section>
+<section id="problem-4.-statistical-critique" class="level1">
+<h1>Problem 4. Statistical critique</h1>
+<section id="a.-revisit-and-summarize" class="level2">
+<h2 class="anchored" data-anchor-id="a.-revisit-and-summarize">a. Revisit and summarize</h2>
+<p>To address whether corals were affected by temperature anomalies, the authors used linear regression to examine the relationship between bleached coral colonies and HotSpot values from buoys and satellite data at the reef locations. In this analysis, the response variable was the average percentage of bleached coral, while the predictor variable was the warmer water temperatures (Hot Spot values). This test directly addresses the research question by determining if temperature anomalies are a statistically significant predictor of coral stress. A ‘significant’ result would show that temperature anomalies recorded by the buoys are a reliable predictor of coral bleaching, meaning that higher Hot Spot values lead to higher percentages of bleached corals. This would confirm that corals in the region are affected by temperature anomalies and that buoy measurements can effectively track coral stress.</p>
+<p>[<img src="coral_bleach_fig.png" class="img-fluid" alt="Coral Bleaching Figure">]</p>
+</section>
+<section id="b.-visual-clarity" class="level2">
+<h2 class="anchored" data-anchor-id="b.-visual-clarity">b. Visual clarity</h2>
+<p>The authors very clearly visually represented their statistics by overlaying linear regression models (Y = a + bX) directly onto the underlying scatter plot data for all 4 figures (each representing a different location or buoy). The x-axis correctly places the Maximum Hot spot (the predictor) while the y-axis shows the Bleached corals percentage (the response), creating a logical flow for interpreting the effect of heat stress on corals. The authors also included the equations of the regression lines, r<sup>2</sup> values, and significance asterisks within the plot area which allows the reader to immediately understand the the model as well as its strength and reliability without searching through the text. By showing the raw data points alongside the trend line, the authors are transparent about the sample size and the variance of the coral response.</p>
+</section>
+<section id="c.-aesthetic-clarity" class="level2">
+<h2 class="anchored" data-anchor-id="c.-aesthetic-clarity">c.&nbsp;Aesthetic clarity</h2>
+<p>The figure is has a very clean and minimalist design with a high data:ink ratio that avoids unnecessary grid lines and other visual clutter. The layout is calculated and sharp as the statistical annotations (r<sup>2</sup>, p-values, and regression equations) are placed in the empty white space above each panel, ensuring the text does not overlap with the data points. While the multi-panel layout is dense, the consistent use of simple black-and-white aesthetics and clear, evenly spaced axis labeling ensures that the primary focus remains on the trends in coral bleaching rather than being a distracting decoration.</p>
+</section>
+<section id="d.-recommendations" class="level2">
+<h2 class="anchored" data-anchor-id="d.-recommendations">d.&nbsp;Recommendations</h2>
+<p>If I were the authors, I might add shaded 95% confidence intervals around each regression line to clearly illustrate the uncertainty of the model predictions across different temperature ranges. I think that it would also be visually appealing and possibly helpful for the reader if the authors used distinct colors or shapes for the data points to differentiate between the PIRATA buoy measurements and the satellite-derived Hot Spot values. The y-axis also shows the percentages only up to 50%. I would suggest standardizing the scale across all four panels to represent 0-100% on the y-axis, to prevent any possibility of a visual exaggeration of the slopes in the regions where overall bleaching is lower than it may appear.</p>
+</section>
 </section>
 
 </main>
