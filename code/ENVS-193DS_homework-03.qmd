@@ -212,19 +212,6 @@ data_clean <- my_data |>
 ```
 
 ```{r}
-#| label: Exploratory data visualization
-# base layer: ggplot 
-ggplot(data = data_clean, # starting with clean data frame
-       aes(x = total_activity_time, # xaxis is acticity time (response)
-           y = total_school_time)) + # yaxis is change in school time (predioctor)
-  # first layer: points to represent individual days of activity 
-  geom_point(size = 4, 
-             stroke = 1,
-             fill = "firebrick4",
-             shape = 21)
-```
-
-```{r}
 #| label: acitivity linear model
 activity_model <- lm( # create the linear model object 
   total_activity_time ~ total_school_time, # formula: response variable ~ predictor variable
