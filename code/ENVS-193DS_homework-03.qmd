@@ -187,7 +187,8 @@ ggplot(my_data, # start with my data frame
   labs( # change the text for x and y axis and the title
     x = "School Day", 
     y = "Total Physical Activity (minutes)",
-    title = "Physical Activity Duration on School vs. Non-School Days"
+    title = "Physical Activity Duration on School vs. Non-School Days",
+    subtitle = "Most Recent Observation as of 03-04-2026"
   ) +
   scale_fill_manual(values = c("yes" = "#2E86AB", "no" = "#A23B72")) +  # Customize the colors
   theme_light() +  # Different theme from default
@@ -225,18 +226,21 @@ ggplot(data = data_clean, # starting with clean data frame
 ```
 
 ```{r}
-activity_model <- lm(
+#| label: acitivity linear model
+activity_model <- lm( # create the linear model object 
   total_activity_time ~ total_school_time, # formula: response variable ~ predictor variable
   data = data_clean      # data: clean_data frame 
 )
 ```
 
 ```{r}
+#| label: activity model diagnostics
 par(mfrow = c(2, 2))   # displaying diagnostic plots in 2x2 grid
 plot(activity_model)    # plotting diagnostics
 ```
 
 ```{r}
+#| label: summary of model
 # more information about the model
 summary(activity_model)
 ```
@@ -250,28 +254,6 @@ activity_preds <- ggpredict(
 
 # display the predictions
 print(activity_preds, n = Inf)
-```
-
-
-
-
-```{r}
-ggplot(my_data, # start with my data
-       aes(x = `time_spent_on_work_min`, 
-           y = `total_physical_activity_min`)) +
-  geom_point(size = 2, 
-             color = "red", 
-             alpha = 0.7) +  # Custom red color for points
-  labs( # change the text for x and y axis and the title
-    x = "Total School Time (minutes)",
-    y = "Total Physical Activity (minutes)",
-    title = "School Work Time vs. Physical Activity Time"
-  ) +
-  theme_bw() +  # black and white theme
-  theme(
-    plot.title = element_text(hjust = 0.5, # Center title
-                              face = "bold"),  # Bold title
-  )
 ```
 
 ```{r}
@@ -302,14 +284,36 @@ ggplot(data = data_clean,
   # axis labels
   labs(x = "Total Activity Time (min)", 
        y = "Total School Time (min)",
-       title = ) +
+       title = "Predicted Values of Activity Time vs School Time",
+       subtitle = "Most Recent Observation as of 03-04-2026"
+       ) +
   # better framing for the data
   coord_cartesian(xlim = c(0, 500), ylim = c(0, 400)) +
   # theme
   theme_minimal()
 ```
 
+### Old visualization (updated):
 
+```{r}
+ggplot(my_data, # start with my data
+       aes(x = `time_spent_on_work_min`, 
+           y = `total_physical_activity_min`)) +
+  geom_point(size = 2, 
+             color = "red", 
+             alpha = 0.7) +  # Custom red color for points
+  labs( # change the text for x and y axis and the title
+    x = "Total School Time (minutes)",
+    y = "Total Physical Activity (minutes)",
+    title = "School Work Time vs. Physical Activity Time",
+    subtitle = "Most Recent Observation as of 03-04-2026"
+  ) +
+  theme_bw() +  # black and white theme
+  theme(
+    plot.title = element_text(hjust = 0.5, # Center title
+                              face = "bold"),  # Bold title
+  )
+```
 
 ## b. Captions
 
