@@ -309,17 +309,32 @@ When thinking of affective visualization, you can expand your ideas of what data
 
 ## a. Describe in words what an affective visualization could look like for your personal data (3-5 sentences).
 
-My affective visualization would take the form of a digitally drawn iPad illustration called “The Swamped Coastline.” The 42 days of my data would be represented as a shoreline, where rising water levels symbolize the amount of time spent on school days and schoolwork. As the tide rises, murky water covers icons representing activities like surfing, running, gym workouts, scuba diving, or skateboarding, illustrating how school responsibilities can overwhelm my schedule. On days with less school work, the tide is lower and these icons are clearly visible on the sand, representing more balance in my daily life. This visualization focuses on communicating the feeling of being flooded by school demands, which aligns with the goal of affective visualizations to emphasize emotion and creativity rather than strict analytical precision.
+An affective visualization of my personal data could be illustrated as a swamp landscape divided into land above the water and murky water below. The water represents the time I spend on schoolwork, with objects like assignments, books, and study materials submerged in the swamp. Above the water on dry land are objects that represent my physical activities, such as a surfboard, running shoe, skateboard, dumbbells, and snorkeling gear. An hourglass placed at the center of the scene represents the passage of time and how school responsibilities accumulate throughout my schedule. This visualization focuses on expressing the feeling of being “swamped” by schoolwork while still showing the activities I try to maintain outside of school.
 
 ## b. Create a sketch (on paper) of your idea.
 
-
+[![Paper sketch of my idea](swamp.jpeg)]
 
 ## c. Make a draft of your visualization.
 
+[![Draft of my idea](swamp_draw.jpg)]
+
 ## d. Write an artist statement.
 
+**Content**
+This piece visualizes how my time is divided between school responsibilities and physical activities. The swamp water represents the time I spend on schoolwork, with objects like assignments, books, and study materials submerged beneath the surface. Above the water, items such as a surfboard, running shoe, skateboard, and gym weights represent the physical activities that exist outside of my academic responsibilities. The hourglass at the center represents the passage of time and how school demands can gradually fill and dominate my schedule.
+
+**Influences**
+My visualization was influenced by the concept of affective data visualization, which emphasizes communicating emotions and experiences through creative imagery rather than traditional charts. I was also inspired by illustrated environmental scenes and cross-section drawings that show what exists above and below the surface of landscapes. These influences helped me convey the feeling of being “swamped” by schoolwork.
+
+**Form**
+This work is a hand-drawn digital illustration created in a simple black-and-white line drawing style. The piece uses a cross-section view of a swamp landscape to visually separate school time below the water from physical activities on land.
+
+**Process**
+I began by placing the hourglass at the center of the composition to emphasize the passage of time and the accumulation of school commitments. I then added symbolic objects representing schoolwork and physical activities to reflect how my time is distributed. Along the way i sketched the overall swamp landscape and dividing the image into above water and underwater sections.
+
 ## e. Prep your materials to share in class
+
 
 
 # Problem 4. Statistical critique
