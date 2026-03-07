@@ -35,7 +35,8 @@ salinity <- read_csv(here("data", "salinity-pickleweed.csv")) |>
   rename(salinity_mscm = salinity_m_s_cm)
 
 # insert code to read in my data and label it as an object called "my_data"
-my_data <- read_csv(here("data", "my_data_hw3.csv"))
+my_data <- read_csv(here("data", "my_data_hw3.csv")) |> 
+  clean_names()
 
 ```
 
@@ -206,11 +207,12 @@ COMMIT
 
 ## a. Updating your visualizations
 
+### Visualization 1. Physical activity on school vs. non-school days
 
 ```{r}
 ggplot(my_data, # start with my data frame
-       aes(x = `On Campus Class`, # x-axis is school day (yes/no) -> categorical predictor
-           y = `Total Physical Activity (min)`, fill = `On Campus Class`)) + # y-axis is total physical activity -> response variable
+       aes(x = `on_campus_class`, # x-axis is school day (yes/no) -> categorical predictor
+           y = `total_physical_activity_min`, fill = `on_campus_class`)) + # y-axis is total physical activity -> response variable
   geom_boxplot(alpha = 0.6) + # make a boxplot, 
   geom_jitter(width = 0.2, # make a jitter
               size = 3, 
@@ -227,11 +229,72 @@ ggplot(my_data, # start with my data frame
   theme(legend.position = "none")  # Remove legend since x-axis already shows the categories
 ```
 
+### Visualization 2. Linear regression
+
+```{r}
+#| label: cleaning data for new visulatization 
+# creating a new object called data_clean from the my_datadata frame
+data_clean <- my_data |> 
+  # cleaning column names
+  clean_names() |> 
+  # calculate total school time (class + work)
+  mutate(total_school_time = `time_spent_in_class_min` + `time_spent_on_work_min`) |> 
+  # selected the comlumns of interest 
+  select(total_school_time, total_physical_activity_min) |> 
+  # renaming the activity time for clarity 
+  rename(total_activity_time = total_physical_activity_min)
+
+```
+
+```{r}
+#| label: Exploratory data visualization
+# base layer: ggplot 
+ggplot(data = data_clean, # starting with clean data frame
+       aes(x = total_activity_time, # xaxis is acticity time (response)
+           y = total_school_time)) + # yaxis is change in school time (predioctor)
+  # first layer: points to represent individual days of activity 
+  geom_point(size = 4, 
+             stroke = 1,
+             fill = "firebrick4",
+             shape = 21)
+```
+
+```{r}
+activity_model <- lm(
+  total_activity_time ~ total_school_time, # formula: response variable ~ predictor variable
+  data = data_clean      # data: clean_data frame 
+)
+```
+
+```{r}
+par(mfrow = c(2, 2))   # displaying diagnostic plots in 2x2 grid
+plot(activity_model)    # plotting diagnostics
+```
+
+```{r}
+# more information about the model
+summary(activity_model)
+```
+
+```{r}
+# creating a new object called activity_preds
+activity_preds <- ggpredict(
+  activity_model, # model object
+  terms = "total_school_time"   # predictor (in quotation marks)
+)
+
+# display the predictions
+print(activity_preds, n = Inf)
+```
+
+
+
+
 ```{r}
 ggplot(my_data, # start with my data
-       aes(x = `Time Spent on Work (min)`, 
-           y = `Total Physical Activity (min)`)) +
-  geom_point(size = 4, 
+       aes(x = `time_spent_on_work_min`, 
+           y = `total_physical_activity_min`)) +
+  geom_point(size = 2, 
              color = "red", 
              alpha = 0.7) +  # Custom red color for points
   labs( # change the text for x and y axis and the title
@@ -246,6 +309,42 @@ ggplot(my_data, # start with my data
   )
 ```
 
+```{r}
+
+# base layer: ggplot
+# using clean data frame
+ggplot(data = data_clean,
+       aes(x = total_activity_time, # xaxis is acticity time (response)
+           y = total_school_time)) + # yaxis is change in school time (predioctor)
+  # first layer: points representing activities
+  geom_point(size = 4,
+             stroke = 1,
+             fill = "firebrick4",
+             shape = 21) +
+  # second layer: ribbon representing confidence interval
+  # using predictions data frame
+  geom_ribbon(data = activity_preds,
+              aes(x = x, # described by column x 
+                  y = predicted,
+                  ymin = conf.low, # lower bound 
+                  ymax = conf.high), # upper bound
+              alpha = 0.1) +
+  # third layer: line representing model predictions
+  # using predictions data frame
+  geom_line(data = activity_preds,
+            aes(x = x,
+                y = predicted)) +
+  # axis labels
+  labs(x = "Total Activity Time (min)", 
+       y = "Total School Time (min)",
+       title = ) +
+  # better framing for the data
+  coord_cartesian(xlim = c(0, 500), ylim = c(0, 400)) +
+  # theme
+  theme_minimal()
+```
+
+
 
 ## b. Captions
 
@@ -257,17 +356,13 @@ In lecture, we talked about the three vertices of data visualization: 1) explora
 
 When thinking of affective visualization, you can expand your ideas of what data visualization could be. Some examples of affective visualizations include:
 
-Jill Pelto’s paintings
-Lorraine Woodruff-Long’s warming strips quilt
-Stefanie Posavec and Giorgia Lupi’s Dear Data project
-Environmental Graphiti
-See slides from the data visualization lecture for more ideas.
-
 ## a. Describe in words what an affective visualization could look like for your personal data (3-5 sentences).
 
-
+My affective visualization would take the form of a digitally drawn iPad illustration called “The Swamped Coastline.” The 42 days of my data would be represented as a shoreline, where rising water levels symbolize the amount of time spent on school days and schoolwork. As the tide rises, murky water covers icons representing activities like surfing, running, gym workouts, scuba diving, or skateboarding, illustrating how school responsibilities can overwhelm my schedule. On days with less school work, the tide is lower and these icons are clearly visible on the sand, representing more balance in my daily life. This visualization focuses on communicating the feeling of being flooded by school demands, which aligns with the goal of affective visualizations to emphasize emotion and creativity rather than strict analytical precision.
 
 ## b. Create a sketch (on paper) of your idea.
+
+
 
 ## c. Make a draft of your visualization.
 
@@ -297,4 +392,5 @@ The figure is has a very clean and minimalist design with a high data:ink ratio 
 
 ## d. Recommendations
 
+If I were the authors, I might add shaded 95% confidence intervals around each regression line to clearly illustrate the uncertainty of the model predictions across different temperature ranges. I think that it would also be visually appealing and possibly helpful for the reader if the authors used distinct colors or shapes for the data points to differentiate between the PIRATA buoy measurements and the satellite-derived Hot Spot values. The y-axis also shows the percentages only up to 50%. I would suggest standardizing the scale across all four panels to represent 0-100% on the y-axis, to prevent any possibility of a visual exaggeration of the slopes in the regions where overall bleaching is lower than it may appear. 
 
